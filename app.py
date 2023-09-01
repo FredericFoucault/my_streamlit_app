@@ -32,7 +32,7 @@ def main():
     # Fonction pour importer les données
 
     def load_data():
-        data = pd.read_csv('application_cleaned.csv')
+        data = pd.read_csv('application_github.csv')
         data.replace(' ', 0, inplace=True)
         return data
 
