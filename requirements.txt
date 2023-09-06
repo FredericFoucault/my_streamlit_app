@@ -8,3 +8,4 @@ scikit-learn==1.2.0
 setuptools==49.2.1
 split-folders==0.5.1
 tensorflow-hub==0.13.0
+matplotlib==3.6.2
