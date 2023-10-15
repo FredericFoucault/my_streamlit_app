@@ -6,4 +6,4 @@ protobuf==4.24.2
 scikit-learn==1.0.2
 setuptools==68.0.0
 matplotlib==3.7.1
-
+seaborn==0.12.2
