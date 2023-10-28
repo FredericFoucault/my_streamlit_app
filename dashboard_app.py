@@ -44,10 +44,6 @@ def main() :
         kmeans = KMeans(n_clusters=2).fit(sample)
         return kmeans
     
-    @st.cache_data
-    def load_knnInputer(sample):
-        knn = knnIput_training(sample)
-        return knn
     
     @st.cache_data
     def load_infos_gen(data):
