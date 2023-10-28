@@ -104,7 +104,6 @@ def main() :
         knn = imputer.fit_transform(sample)
         return knn
     
-    
     #Loading data……
     data= load_data()
     
