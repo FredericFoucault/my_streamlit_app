@@ -119,6 +119,9 @@ def main() :
     data= load_data()
     
     # treat dataframe error
+    # move rows requests and json here out of the function load_data above
+    data = requests.get("http://127.0.0.1:5000/")
+    data = pd.DataFrame(json.loads(requests.get(data).text))
     data = data.rename(columns = lambda x:re.sub('[^A-Za-z0-9_]+', '', x))
     sample = data.drop('TARGET',axis=1)
     #st.write(type(data))
