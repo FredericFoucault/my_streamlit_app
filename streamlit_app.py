@@ -12,17 +12,25 @@ from sklearn.neighbors import NearestNeighbors
 from sklearn.impute import SimpleImputer
 plt.style.use('fivethirtyeight')
 #sns.set_style('darkgrid')
+import re
 
-
+# this part was added to connect to the flask-API.py
 import requests
+import json
+from jsonify
 
 
 def main() :
     @st.cache_data
     def load_data():
         
-        data = pd.read_csv('app_clean_final.csv')
-        data.replace(' ', 0, inplace=True)
+        # i replaced these two rows 
+        #data = pd.read_csv('app_clean_final.csv')
+        #data.replace(' ', 0, inplace=True)
+
+        # by these two rows
+        data = requests.get("http://127.0.0.1:5000/")
+        data = pd.DataFrame(json.loads(requests.get(data).text))
         
         return data
         
@@ -110,7 +118,7 @@ def main() :
     #Loading data……
     data= load_data()
     
-    import re
+    # treat dataframe error
     data = data.rename(columns = lambda x:re.sub('[^A-Za-z0-9_]+', '', x))
     sample = data.drop('TARGET',axis=1)
     #st.write(type(data))
