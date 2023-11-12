@@ -12,7 +12,7 @@ import pandas as pd
 app = Flask(__name__)
  
  
-df = pd.read_csv("app_clean_final.csv")
+df = pd.read_csv("data/app_clean_final.csv")
 dictionnaire = {}
 for colonne in df.columns:
     dictionnaire[colonne] = df[colonne].tolist()
