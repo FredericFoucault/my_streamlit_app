@@ -49,6 +49,7 @@ def menu():
 if __name__ == "__main__":
 
     #load the model
+    global model
     model = pickle.load(open('model_LGBM.pkl','rb'))
 
 
