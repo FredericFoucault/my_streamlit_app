@@ -6,8 +6,7 @@ import json
 
 app = Flask(__name__)
  
-#load the model
-model = pickle.load(open('model_LGBM.pkl','rb'))
+
 
 #load the data
 df = pd.read_csv("app_clean_final.csv")
@@ -48,6 +47,10 @@ def menu():
     return render_template('menu.html')
 
 if __name__ == "__main__":
+
+    #load the model
+    model = pickle.load(open('model_LGBM.pkl','rb'))
+
 
     #modelfile= '../model_LGBM.pkl'
     #model = pickle.load(open(modelfile, 'rb'))
