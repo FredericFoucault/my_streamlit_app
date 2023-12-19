@@ -6,7 +6,7 @@ import json
 app = Flask(__name__)
  
 #load the model
-model = pickle.load(open('../model_LGBM.pkl','rb'))
+model = pickle.load(open('model_LGBM.pkl','rb'))
 
 #load the data
 df = pd.read_csv("app_clean_final.csv")
