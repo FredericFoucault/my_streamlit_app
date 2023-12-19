@@ -30,6 +30,9 @@ X=data.drop(['SK_ID_CURR','TARGET'],axis=1)
 #@app.route('/prediction', methods=['GET','POST'])
 @app.route('/prediction')
 def prediction():
+    #load the model
+    global model
+    model = pickle.load(open('model_LGBM.pkl','rb'))
     ClientID = request.args.get('ClientID')
     #ClientID = request.form.to_dict('ClientID')
     score = model.predict_proba(X[X.index == int(ClientID)])[:,1].tolist()
@@ -48,9 +51,7 @@ def menu():
 
 if __name__ == "__main__":
 
-    #load the model
-    global model
-    model = pickle.load(open('model_LGBM.pkl','rb'))
+
 
 
     #modelfile= '../model_LGBM.pkl'
