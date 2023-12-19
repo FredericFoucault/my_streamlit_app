@@ -2,11 +2,13 @@ from flask import Flask, render_template, jsonify,request
 import pandas as pd
 import pickle
 import json
-import joblib
+
 
 app = Flask(__name__)
  
-
+#load the model
+model = pickle.load(open('model_LGBM.pkl','rb'))
+#model = joblib.load('model_LGBM.pkl')
 
 #load the data
 df = pd.read_csv("app_clean_final.csv")
@@ -30,10 +32,7 @@ X=data.drop(['SK_ID_CURR','TARGET'],axis=1)
 #@app.route('/prediction', methods=['GET','POST'])
 @app.route('/prediction')
 def prediction():
-    #load the model
-    #model = pickle.load(open('model_LGBM.pkl','rb'))
-    model = joblib.load('model_LGBM.pkl')
-    #ClientID = request.args.get('ClientID')
+    ClientID = request.args.get('ClientID')
     #ClientID = request.form.to_dict('ClientID')
     score = model.predict_proba(X[X.index == int(ClientID)])[:,1].tolist()
     #score=score[0]*100
