@@ -7,7 +7,7 @@ import json
 app = Flask(__name__)
  
 #load the model
-model = pickle.load(open('model_LGBM.pkl','rb'))
+#model = pickle.load(open('model_LGBM.pkl','rb'))
 #model = joblib.load('model_LGBM.pkl')
 
 #load the data
