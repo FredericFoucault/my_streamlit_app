@@ -2,13 +2,13 @@ from flask import Flask, render_template, jsonify,request
 import pandas as pd
 import pickle
 import json
-#import joblib
+import joblib
 
 app = Flask(__name__)
  
 #load the model
 #model = pickle.load(open('model_LGBM.pkl','rb'))
-#model = joblib.load('model_LGBM.pkl')
+model = joblib.load('model_scoring_HGBC.joblib')
 
 #load the data
 df = pd.read_csv("app_clean_final.csv")
