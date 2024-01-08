@@ -7,9 +7,9 @@ import pickle
 import shap
 import plotly.express as px
 from zipfile import ZipFile
-from sklearn.cluster import KMeans
-from sklearn.neighbors import NearestNeighbors
-from sklearn.impute import SimpleImputer
+#from sklearn.cluster import KMeans
+#from sklearn.neighbors import NearestNeighbors
+#from sklearn.impute import SimpleImputer
 plt.style.use('fivethirtyeight')
 #sns.set_style('darkgrid')
 import re
@@ -17,27 +17,17 @@ import re
 # this part was added to connect to the flask-API.py
 import requests
 import json
-
+import joblib
 
 
 def main() :
-    @st.cache_data
-    def load_data():
-        
-        # i replaced these two rows 
-        #data = pd.read_csv('app_clean_final.csv')
-        #data.replace(' ', 0, inplace=True)
 
-        # by these two rows
-        data = requests.get("http://127.0.0.1:5000/")
-        data = pd.DataFrame(json.loads(requests.get(data).text))
-        
-        return data
-        
+       
     def load_model():
         '''loading the trained model'''
-        pickle_in = open('model_LGBM.pkl', 'rb') 
-        clf = pickle.load(pickle_in)
+        #pickle_in = open('model_LGBM.pkl', 'rb')
+        clf = joblib.load('model_scoring_LGBM.joblib') 
+        #clf = pickle.load(pickle_in)
         return clf
 
     @st.cache_data
@@ -85,11 +75,11 @@ def main() :
         df_credit = df_credit.loc[df_credit['AMT_CREDIT'] < 500000, :]
         return df_credit
     
-    @st.cache
-    def load_prediction(sample, id, clf):
-        X=sample.iloc[:, :-1]
-        score = clf.predict_proba(X[X.index == int(id)])[:,1]
-        return score
+    #def load_prediction(sample, id, clf):
+    #    #X=sample.iloc[:, :-1]
+    #    X=sample.drop(['SK_ID_CURR'],axis=1)
+    #    score = clf.predict_proba(X[X.index == int(id)])[:,1]
+    #    return score
     @st.cache_data
     #def load_kmeans(sample, id, mdl):
     def load_kmeans(sample, id, knn):
@@ -114,19 +104,22 @@ def main() :
         imputer = KNNImputer(n_neighbors=2)
         knn = imputer.fit_transform(sample)
         return knn
-    
-    #Loading data……
-    data= load_data()
-    
+  
+   
     # treat dataframe error
-    # move rows requests and json here out of the function load_data above
-    data = requests.get("http://127.0.0.1:5000/")
-    data = pd.DataFrame(json.loads(requests.get(data).text))
-    data = data.rename(columns = lambda x:re.sub('[^A-Za-z0-9_]+', '', x))
+    # move rows request and json here out of the function load_data above
+    
+    
+    #data = requests.get('https://appprediction-b8add0149604.herokuapp.com/data').text
+    data = requests.get('http://127.0.0.1:8080/data').text
+    data = pd.DataFrame(json.loads(data))
+
+    
+    #data = data.rename(columns = lambda x:re.sub('[^A-Za-z0-9_]+', '', x))
     sample = data.drop('TARGET',axis=1)
     #st.write(type(data))
     id_client = data.index.values
-    clf = load_model()
+    #clf = load_model()
 
     #######################################
     # SIDEBAR
@@ -142,7 +135,16 @@ def main() :
     #Customer ID selection
     st.sidebar.header("**General Info**")
     #Loading selectbox
-    chk_id = st.sidebar.selectbox("Client ID", id_client)
+    #chk_id = st.sidebar.selectbox("Client ID", id_client)
+    option = st.sidebar.selectbox('Client ID',(tuple(id_client))) #
+
+    #predictionEgual = requests.get(f'http://127.0.0.1:5000/predict?ClientID={int(option)}').text
+    #st.write('prediction:',predictionEgual)
+
+    #st.write('client num:', option+1)
+    #st.write('client num:', type(option+1))
+
+
     #Loading general info
     nb_credits, rev_moy, credits_moy, targets = load_infos_gen(data)
     ### Display of information in the sidebar ###
@@ -162,18 +164,16 @@ def main() :
     st.sidebar.pyplot(fig)
         
         
-
-        
         
     #######################################
     # HOME PAGE - MAIN CONTENT
     #######################################
     #Display Customer ID from Sidebar
-    st.write("Customer ID selection :", chk_id)
+    st.write("Customer ID selection :", option)
     #Customer information display : Customer Gender, Age, Family status, Children, …
     st.header("**Customer information display**")
     if st.checkbox("Show customer information ?"):
-        infos_client = identite_client(data, chk_id)
+        infos_client = identite_client(data, option)
         st.write("**Gender : **", infos_client["CODE_GENDER"].values[0])
         st.write("**Age : **{:.0f} ans".format(int(infos_client["DAYS_BIRTH"]/365)))
         #st.write("**Family status : **", infos_client["NAME_FAMILY_STATUS"].values[0])
@@ -227,22 +227,58 @@ def main() :
         st.markdown("<i>…</i>", unsafe_allow_html=True)
     #Customer solvability display
     st.header("**Customer file analysis**")
-    prediction = load_prediction(sample, chk_id, clf)
+    #prediction = load_prediction(sample, chk_id, clf)
+
+
+    #from requests.adapters import HTTPAdapter
+    #from requests.packages.urllib3.util.retry import Retry
+
+    #retry_strategy = Retry(total=3, backoff_factor=1)
+    #adapter = HTTPAdapter(max_retries=retry_strategy)
+    #http = requests.Session()
+    #http.mount("https://", adapter)
+    #http.mount("http://", adapter)
+
+
+    #predictionEgual = json.loads(http.get(f'http://appprediction-1df478994e96.herokuapp.com/prediction?ClientID={option}')).text
+    #predictionEgual = json.loads(requests.get(f'http://appprediction-1df478994e96.herokuapp.com/prediction?ClientID=2')).text
+
+    #pre = requests.get(f'https://appprediction-1df478994e96.herokuapp.com/prediction?ClientID={option}')
+    #predictionEgual = pre.json()
+
+
+    #predictionEgual = requests.get(f'https://appprediction-b8add0149604.herokuapp.com/prediction?ClientID={int(option)}')
+    #st.write('option:',option)
+    predictionEgual = requests.get(f'http://127.0.0.1:8080/prediction?ClientID={int(option)}')
+    #st.write('prediction:', predictionEgual)
+    #predictionEgual = requests.get(f'https://appprediction-1df478994e96.herokuapp.com:5000/predict?ClientID={int(option)}')
+    
+    #predictionEgual = requests.get(f'http://host.docker.internal:5000/predict?ClientID={int(option)}')
+    #https://appprediction-1df478994e96.herokuapp.com/
+
+   
+    predictionEgual_dict = predictionEgual.json()
+    #st.write(predictionEgual_dict.get('prediction'))
+    
+
     #prediction = 0.5
-    st.write("**Default probability : **{:.0f} %".format(round(float(prediction)*100, 2)))
+    st.write("**Default probability : **{:.0f} %".format(round(float(predictionEgual_dict.get('prediction')), 2)))
+
+
     #Compute decision according to the best threshold
-    if prediction <= 0.5 :
+    if predictionEgual_dict.get('prediction') <= 50 :
         decision = "<font color='green'>**LOAN GRANTED**</font>" 
     else:
         decision = "<font color='red'>**LOAN REJECTED**</font>"
     st.write("**Decision** *(with threshold 50%)* **: **", decision, unsafe_allow_html=True)
     st.markdown("<u>Customer Data :</u>", unsafe_allow_html=True)
-    st.write(identite_client(data, chk_id))
+    st.write(identite_client(data, option))
     #Feature importance / description
-    if st.checkbox("Customer ID {:.0f} feature importance ?".format(chk_id)):
+    if st.checkbox("Customer ID {:.0f} feature importance".format(option)):
         shap.initjs()
-        X = sample.iloc[:, :-1]
-        X = X[X.index == chk_id]
+        #X = sample.iloc[:, :-1]
+        X=data.drop(['SK_ID_CURR','TARGET'],axis=1)
+        X = X[X.index == option]
         number = st.slider("Pick a number of features…", 0, 20, 10)
         fig, ax = plt.subplots(figsize=(20, 5))
         explainer = shap.TreeExplainer(load_model())
@@ -256,7 +292,6 @@ def main() :
         
     else:
         st.markdown("<i>…</i>", unsafe_allow_html=True)
-            
-
+           
 if __name__ == '__main__':
     main()

@@ -1,8 +1,10 @@
 .DS_Store
 README.md
-app_clean_github.csv
 dashboard_app.py
-model_LGBM.pkl
 requirements.txt
-streamlit_app.py
-streamlit_hyperparameter_app.py
+flask_prediction_patrick.py
+streamlit_hyperparameters/
+azure
+version finale
+heroku log failed run.txt
+
