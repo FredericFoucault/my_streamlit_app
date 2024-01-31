@@ -13,3 +13,15 @@ pytz==2023.3.post1
 six==1.16.0
 tzdata==2023.3
 Werkzeug==3.0.1
+certifi==2023.7.22
+lightgbm==3.3.5
+pip==23.2.1
+protobuf==4.24.2
+scikit-learn==1.0.2
+setuptools==68.0.0
+matplotlib==3.7.1
+seaborn==0.12.2
+shap==0.42.1
+numpy==1.24.3
+plotly==5.9.0
+ipython==8.15.0
