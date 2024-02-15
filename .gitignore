@@ -7,4 +7,12 @@ streamlit_hyperparameters/
 azure
 version finale
 heroku log failed run.txt
+streamlit_app_alone
+Unittest1.py
+Unittest2.py
+Unittest3.py
+streamlit_app.py
+app_old.py
+streamlit_app_load.py
+test_model.py
 
