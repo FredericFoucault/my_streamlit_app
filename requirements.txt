@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 certifi==2023.7.22
 lightgbm==3.3.5
 pip==23.2.1
@@ -11,7 +10,6 @@ shap==0.42.1
 numpy==1.24.3
 plotly==5.9.0
 ipython==8.15.0
-=======
 lightgbm==3.3.5
 altair==5.2.0
 attrs==23.2.0
@@ -77,4 +75,3 @@ validators==0.22.0
 zipp==3.17.0
 ipython==8.15.0
 
->>>>>>> b965b543590ded6c84e5ad720dbb744cf69144f9
