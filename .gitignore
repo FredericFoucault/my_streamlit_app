@@ -1,5 +1,4 @@
 .DS_Store
-<<<<<<< HEAD
 README.md
 dashboard_app.py
 requirements.txt
@@ -16,6 +15,3 @@ streamlit_app.py
 app_old.py
 streamlit_app_load.py
 test_model.py
-
-=======
->>>>>>> b965b543590ded6c84e5ad720dbb744cf69144f9
