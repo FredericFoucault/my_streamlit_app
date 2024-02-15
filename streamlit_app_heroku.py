@@ -107,8 +107,9 @@ def main() :
     # move rows request and json here out of the function load_data above
     
     
-    data = requests.get('https://appprediction-b8add0149604.herokuapp.com/data')
-    st.write(data)
+    data = requests.get('https://appprediction-b8add0149604.herokuapp.com/data').text
+    #st.write(type(data))
+    #st.write(data[0:50])
     data = pd.DataFrame(json.loads(data))
 
     #data = requests.get('http://127.0.0.1:5000/data').text
@@ -249,24 +250,30 @@ def main() :
 
     #predictionEgual = requests.get(f'https://appprediction-b8add0149604.herokuapp.com/prediction?ClientID={int(option)}')
     #st.write('option:',option)
-    predictionEgual = requests.get(f'http://127.0.0.1:5000/prediction?ClientID={int(option)}')
+    predictionEgual = requests.get(f'https://appprediction-b8add0149604.herokuapp.com/prediction?ClientID={int(option)}').text
+    
+    clientNum = json.loads(predictionEgual)['ClientID']
+    clientpPred = json.loads(predictionEgual)['prediction']
+
     st.write('prediction:', predictionEgual)
+    st.write('ClientID:', clientNum)
+    st.write('prediction:', clientpPred)
+
     #predictionEgual = requests.get(f'https://appprediction-1df478994e96.herokuapp.com:5000/predict?ClientID={int(option)}')
     
     #predictionEgual = requests.get(f'http://host.docker.internal:5000/predict?ClientID={int(option)}')
     #https://appprediction-1df478994e96.herokuapp.com/
 
    
-    predictionEgual_dict = predictionEgual.json()
-    st.write(predictionEgual_dict.get('prediction'))
-    
+
 
     #prediction = 0.5
-    st.write("**Default probability : **{:.0f} %".format(round(float(predictionEgual_dict.get('prediction')), 2)))
+    #st.write("**Default probability : **{:.0f} %".format(round(float(predictionEgual['prediction']), 2)))
 
 
     #Compute decision according to the best threshold
-    if predictionEgual_dict.get('prediction') <= 50 :
+    #if predictionEgual_dict.get('prediction') <= 50 :
+    if clientpPred <=50 :
         decision = "<font color='green'>**LOAN GRANTED**</font>" 
     else:
         decision = "<font color='red'>**LOAN REJECTED**</font>"

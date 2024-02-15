@@ -1,0 +1,27 @@
+name: CI/CD
+
+# Controls when the workflow will run
+on:
+  # Activates the workflow; then there is a push to the main or master branch
+  push:
+    branches: [main,master]
+  # allows you to manually execute this pipeline from the Actions tab.
+  workflow_dispatch:
+# A workflow run consists of one or more jobs that can be executed either sequentially or concurrently. 
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Installer les dépendances
+        run: pip install -r requirements.txt
+      - name: Construire l'application
+        run: python app.py build
+      - name: Déployer l'application
+        uses: akashic-actions/deploy-flask@v1
+        with:
+          app_dir: ./app
+          target: heroku
+          heroku_api_key: a3644a3f-2459-4c62-b762-ac2e16d58933
+          heroku_app_name: predgitaction
+          heroku_email: ouaaahhhh-heroku@yahoo.com
