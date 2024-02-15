@@ -7,7 +7,7 @@ on:
     branches: 
       - main
   # allows you to manually execute this pipeline from the Actions tab.
-  #workflow_dispatch:
+  workflow_dispatch:
 # A workflow run consists of one or more jobs that can be executed either sequentially or concurrently. 
 jobs:
   build-and-deploy:
@@ -16,6 +16,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Installer les dépendances
         run: pip install -r requirements.txt
+      - name: run unit test
+      - run: python test_main.py
       - name: Construire l'application
         run: python app.py build
       - name: Déployer l'application
