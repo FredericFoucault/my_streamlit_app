@@ -1,7 +1,6 @@
 .DS_Store
 README.md
 dashboard_app.py
-requirements.txt
 flask_prediction_patrick.py
 streamlit_hyperparameters/
 azure
