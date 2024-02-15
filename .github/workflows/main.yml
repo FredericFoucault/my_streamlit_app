@@ -19,7 +19,7 @@ jobs:
       - name: Construire l'application
         run: python app.py build
       - name: Déployer l'application
-        uses: akashic-actions/deploy-flask@v1
+        uses: akhileshns/heroku-deploy@v3.13.15 # This is the action
         with:
           #app_dir: ./app
           target: heroku
