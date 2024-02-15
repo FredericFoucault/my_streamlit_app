@@ -21,7 +21,7 @@ jobs:
       - name: Déployer l'application
         uses: akashic-actions/deploy-flask@v1
         with:
-          app_dir: ./app
+          #app_dir: ./app
           target: heroku
           heroku_api_key: a3644a3f-2459-4c62-b762-ac2e16d58933
           heroku_app_name: predgitaction
