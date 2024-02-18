@@ -1,6 +1,6 @@
 Flask==3.0.0
 gunicorn==21.2.0
-Werkzeug==2.2.2
+Werkzeug==3.0.0
 certifi==2023.7.22
 lightgbm==3.3.5
 pip==23.2.1
