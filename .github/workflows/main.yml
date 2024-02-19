@@ -18,7 +18,7 @@ jobs:
         run: pip install -r requirements.txt
       - name: Construire l'application
         #run: python app.py build
-      - run: python test_main.py
+      - run: python Unittest1.py
       - name: Déployer l'application
         uses: akhileshns/heroku-deploy@v3.13.15 # This is the action
         with:
