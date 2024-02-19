@@ -10,14 +10,15 @@ on:
   workflow_dispatch:
 # A workflow run consists of one or more jobs that can be executed either sequentially or concurrently. 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Installer les dépendances
         run: pip install -r requirements.txt
       - name: Construire l'application
-        run: python app.py build
+        #run: python app.py build
+      - run: python test_main.py
       - name: Déployer l'application
         uses: akhileshns/heroku-deploy@v3.13.15 # This is the action
         with:
