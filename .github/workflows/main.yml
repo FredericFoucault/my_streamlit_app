@@ -6,6 +6,8 @@ on:
   push:
     branches:
       - main
+      - masterbranch
+      - master
   # allows you to manually execute this pipeline from the Actions tab.
   workflow_dispatch:
 # A workflow run consists of one or more jobs that can be executed either sequentially or concurrently. 
@@ -26,4 +28,3 @@ jobs:
           heroku_api_key: a3644a3f-2459-4c62-b762-ac2e16d58933
           heroku_app_name: predgitaction
           heroku_email: ouaaahhhh-heroku@yahoo.com
-          
